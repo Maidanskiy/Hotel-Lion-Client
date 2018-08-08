@@ -4,8 +4,8 @@
   "description": "Some base functionality for startup",
   "main": "./src/main.ts",
   "scripts": {
-    "start": "ts-node --type-check -r tsconfig-paths/register ./src/main.ts",
-    "dev": "nodemon",
+    "start": "npx ts-node --type-check -r tsconfig-paths/register ./src/main.ts",
+    "dev": "npx nodemon",
     "test:unit": "NODE_ENV='test' npx mocha -r ts-node/register ./test/**/*.spec.ts",
     "test": "npm run test:unit"
   },
