@@ -13,6 +13,4 @@ after_success:
   - docker build -t hotel_app .
   - docker tag ${REGISTRY}/hotelmvp/web hotel_app
   - docker push ${REGISTRY}/hotelmvp/web
-  - heroku -v
-  - heroku help container
-  - heroku container:release web
+  - heroku container:release web -a hotelmvp
