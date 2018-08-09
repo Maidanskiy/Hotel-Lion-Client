@@ -6,5 +6,6 @@ script:
 after_success:
   - docker login -u ${USERNAME} -p ${PASSWORD} ${REGISTRY}
   - docker build -t ${REGISTRY}/hotelmvp .
+  - docker ps -a
   - docker push ${REGISTRY}/hotelmvp
   - heroku container:release web -a hotelmvp
