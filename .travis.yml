@@ -1,6 +1,10 @@
 language: node_js
+sudo: required
 services:
   - docker
+before_install:
+  - sudo apt-get update
+  - sudo snap install heroku --classic
 script:
 - npm test
 after_success:
