@@ -5,6 +5,9 @@ script:
 - npm test
 after_success:
   - docker login -u ${USERNAME} -p ${PASSWORD} ${REGISTRY}
-  - docker build -t ${REGISTRY}/hotelmvp/web .
-  - docker tag web ${REGISTRY}/hotelmvp/web
+  - docker build -t hotel_app .
+  - docker tag ${REGISTRY}/hotelmvp/web hotel_app
   - docker push ${REGISTRY}/hotelmvp/web
+  - heroku -v
+  - heroku help container
+  - heroku container:release web
