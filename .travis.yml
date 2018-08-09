@@ -6,6 +6,5 @@ script:
 after_success:
   - docker login -u ${USERNAME} -p ${PASSWORD} ${REGISTRY}
   - docker build -t ${REGISTRY}/hotelmvp/web .
-  - docker images
+  - docker tag web ${REGISTRY}/hotelmvp/web
   - docker push ${REGISTRY}/hotelmvp/web
-  - heroku help container
