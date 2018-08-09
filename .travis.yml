@@ -1,12 +1,10 @@
 language: node_js
 services:
   - docker
-before_script:
-  - echo 'hello, before script works fine'
 script:
 - npm test
 after_success:
   - docker login -u ${USERNAME} -p ${PASSWORD} ${REGISTRY}
-  - docker build -t heroku/hotel .
-  - docker push heroku/hotel
-  - heroku run --app heroku/hotel
+  - docker build -t ${REGISTRY}/hotelmvp/web .
+  - docker push ${REGISTRY}/hotelmvp/web
+  - heroku run --app hotelmvp
