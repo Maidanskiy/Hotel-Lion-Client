@@ -4,8 +4,10 @@ services:
   - docker
 before_install:
   - sudo curl https://cli-assets.heroku.com/install.sh | sh
+install:
+  - npm install
 script:
-- npm test
+  - npm test
 after_success:
   - docker login -u ${USERNAME} -p ${PASSWORD} ${REGISTRY}
   - docker build -t hotel_app .

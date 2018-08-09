@@ -5,6 +5,6 @@ export class AppController {
 
     @Get()
     public root(): string {
-        return 'Hello world!'
+        return 'Hello world again!'
     }
 }
