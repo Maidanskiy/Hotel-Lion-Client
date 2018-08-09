@@ -4,7 +4,8 @@ services:
   - docker
 before_install:
   - sudo apt-get update
-  - sudo snap install heroku --classic
+  - sudo apt-get install curl
+  - sudo curl https://cli-assets.heroku.com/install.sh | sh
 script:
 - npm test
 after_success:
