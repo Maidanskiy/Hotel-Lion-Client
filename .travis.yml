@@ -3,15 +3,13 @@ sudo: required
 services:
   - docker
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install curl
   - sudo curl https://cli-assets.heroku.com/install.sh | sh
 script:
 - npm test
 after_success:
   - docker login -u ${USERNAME} -p ${PASSWORD} ${REGISTRY}
   - docker build -t hotel_app .
-  - docker tag ${REGISTRY}/hotelmvp/web:latest hotel_app:latest
+  - docker tag hotel_app ${REGISTRY}/hotelmvp/web
   - docker images
-  - docker push ${REGISTRY}/hotelmvp/web:latest
+  - docker push ${REGISTRY}/hotelmvp/web
   - heroku container:release web -a hotelmvp
