@@ -1,12 +1,12 @@
 language: node_js
-install:
-- npm install
+services:
+  - docker
+before_script:
+  - echo 'hello, before script works fine'
 script:
 - npm test
-deploy:
-  provider: heroku
-  api_key:
-    secure: "M6F7kH+uG37RoqYsQ/+iEaTmBQbWB0CeCcikAIqPPgKh1Cuvg4+jHqK+AKRBSmBWnuybmPtvsW04yabGENrqkXge10I+H7/pMNjHZ/TxFJfDgd3ff2n94YorvIHMxPLgTTY3nb2Z53uiptgqlhxOr6qAAwL0xX+A3Q4qQC5UIso+97ikKx6twwX7V/SKu7OlGlM9aDqzOFQKbfBewR3tJfBjBqlcY/9XkT+7TQI34dz/243MY35xfv98/4rso7eWjtAMipJNJdS+70G2Vwfc4LAGZBFrCCsOrZcAGIVTq1tFJRmhmFENXg5wXjHkUQJ7R16pvm25rvMRVpHtfC3AqbmdgOlCLbmbqtco0X8jkvzAKmTURkYD3+9MIP6qHvYJAqx+dNiSH/LRLtyZJDTL/1w7H+vRQ2/BytZ+jykOG2PYc1AZGM4KKeqx16aTjjUVpT6nfHtb23KZ7Y2FzJQ4aOGsK+o+KNtgMyX4ApYmY2Q2mf0NgiS7qty+ASm5RW8oWOilCBRdIE/xkLk2CwhtjkY7ZW+/CqrO6I85aNMrAYieDLZ/BF7xtzYwVYy5SFV+XNwuKDBWNDX1ZFug9vilp/jc1wxaPuLvz+OImt2IRMg2fdL8xsU4WGNsOA6mqDgZu5y58Sph3MercJqvOgOHq0sfgcpAhgYKr797Kq7ug2Q="
-  app: hotelmvp
-  on:
-    repo: Maidanskiy/hotel
+after_success:
+  - docker login -u ${USERNAME} -p ${PASSWORD} ${REGISTRY}
+  - docker build -t heroku/hotel .
+  - docker push heroku/hotel
+  - heroku run --app heroku/hotel
