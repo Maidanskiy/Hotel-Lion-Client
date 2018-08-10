@@ -12,7 +12,7 @@ script:
   - npm test
 after_success:
   - docker login -u ${USERNAME} -p ${HEROKU_API_KEY} ${REGISTRY}
-  - docker build -t hotel_app .
-  - docker tag hotel_app ${REGISTRY}/hotelmvp/web
-  - docker push ${REGISTRY}/hotelmvp/web
-  - heroku container:release web -a hotelmvp
+  - docker build -t hotel_lion .
+  - docker tag hotel_lion ${REGISTRY}/hotellion/web
+  - docker push ${REGISTRY}/hotellion/web
+  - heroku container:release web -a hotellion
