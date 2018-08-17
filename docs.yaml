@@ -1,0 +1,133 @@
+swagger: '2.0'
+info:
+  title: Hotel Lion API
+  description: >
+    ## API for mobile application
+  version: 0.0.1
+host: 'hotel-lion-client.herokuapp.com'
+basePath: /client/api
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: auth
+  description: Authorization logic
+securityDefinitions:
+  Bearer:
+    in: header
+    name: Authorization
+    type: apiKey
+paths:
+  /signup:
+    post:
+      tags:
+      - auth
+      summary: Creates new account
+      description: >-
+        This method will send an email to the provided address
+      parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/SignUp'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /signin:
+    post:
+      tags:
+      - auth
+      summary: Tries to login as existent user
+      description: Returns JWT in Authorization header
+      parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/SignIn'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Authentication:
+              type: string
+              description: JWT
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequest'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+definitions:
+  BadRequest:
+    type: object
+    properties:
+      title:
+        type: string
+      code:
+        type: number
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/ErrorItem'
+  ErrorItem:
+    type: object
+    properties:
+      path:
+        type: array
+        items:
+          $ref: '#/definitions/PathItem'
+        description: An array contains the path to the field with an error
+      message:
+        type: string
+  PathItem:
+    type: string
+  SignUp:
+    type: object
+    required:
+    - title
+    - last_name
+    - first_name
+    - email
+    - password
+    properties:
+      title:
+        type: string
+        example: Mr.
+      last_name:
+        type: string
+        example: Doe
+      first_name:
+        type: string
+        example: John
+      email:
+        type: string
+        example: john.doe@gmail.com
+      password:
+        type: string
+        example: pa55w0rd
+      phone_number:
+        type: string
+        example: '+380992237890'
+  SignIn:
+    type: object
+    required:
+    - email
+    - password
+    properties:
+      email:
+        type: string
+        example: john.doe@gmail.com
+      password:
+        type: string
+        example: pa55w0rd
