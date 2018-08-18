@@ -7,7 +7,9 @@ const docs = YAML.load(__dirname + '/../docs.yaml');
 
 (async () => {
 
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule, {
+    logger: console
+  })
 
   // use global prefix
   app.setGlobalPrefix('client/api')
@@ -20,6 +22,9 @@ const docs = YAML.load(__dirname + '/../docs.yaml');
     optionsSuccessStatus: 204,
     exposedHeaders: ['Authorization']
   })
+
+  // health check
+  app.use('/client/api/health', (req, res) => res.end(`I'm alive`) )
 
   // web docs
   app.use('/client/api/docs', swaggerUI.serve, swaggerUI.setup(docs))

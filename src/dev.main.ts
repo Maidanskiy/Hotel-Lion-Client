@@ -15,6 +15,15 @@ const docs = YAML.load(__dirname + '/../docs.yaml');
   })
 
   app.setGlobalPrefix('client/api')
+
+  app.enableCors({
+    origin: '*',
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+    exposedHeaders: ['Authorization']
+  })
+
   app.use('/client/api/docs', swaggerUI.serve, swaggerUI.setup(docs))
 
   await app.listen(process.env.PORT || 3000)

@@ -13,6 +13,8 @@ consumes:
 produces:
 - application/json
 tags:
+- name: health
+  description: Health check
 - name: auth
   description: Authorization logic
 securityDefinitions:
@@ -21,10 +23,23 @@ securityDefinitions:
     name: Authorization
     type: apiKey
 paths:
+  /health:
+    get:
+      tags:
+        - health
+      summary: Check service health
+      prduces:
+        - plain/text
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+            example: I'm alive
   /signup:
     post:
       tags:
-      - auth
+        - auth
       summary: Creates new account
       description: >-
         This method will send an email to the provided address
@@ -44,7 +59,7 @@ paths:
   /signin:
     post:
       tags:
-      - auth
+        - auth
       summary: Tries to login as existent user
       description: Returns JWT in Authorization header
       parameters:
