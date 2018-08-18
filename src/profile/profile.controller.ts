@@ -1,21 +1,27 @@
 import { Controller, Post, Body, UsePipes } from '@nestjs/common'
 import { CreateProfileDto } from './dto/create-profile.dto'
+import { ProfileService } from './profile.service'
 
 /**
  * Profile Controller
  */
-@Controller('profile')
+@Controller('profiles')
 export class ProfileController {
+
+  constructor(private readonly _ProfileService: ProfileService) {}
 
   /**
    * Creates new profile
-   * @param createProfile
+   * @param createProfile CreateProfileDto
+   * @return void
    */
   @Post()
-  public create(
+  public async create(
     @Body() createProfile: CreateProfileDto
-  ): void {
-    // save profile into DB
+  ): Promise<void> {
+
+    await this._ProfileService.createProfile(createProfile)
+
   }
 
 }

@@ -1,4 +1,5 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common'
+import { MongooseModule } from '@nestjs/mongoose'
 import { EnvModule } from './env/env.module'
 import { AppLogger } from './app.logger'
 import { EmailModule } from './email/email.module'
@@ -9,7 +10,10 @@ import { ProfileModule } from './profile/profile.module'
  */
 @Module({
   providers: [AppLogger],
-  imports: [EnvModule, EmailModule, ProfileModule]
+  imports: [
+    EnvModule, EmailModule, ProfileModule,
+    MongooseModule.forRoot(String(process.env.MONGODB_URI))
+  ]
 })
 export class AppModule {
 
