@@ -3,7 +3,6 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import * as swaggerUI from 'swagger-ui-express'
 import * as YAML from 'yamljs'
-import logger from './app.logger'
 
 dotenv.config()
 
@@ -11,10 +10,11 @@ const docs = YAML.load(__dirname + '/../docs.yaml');
 
 (async () => {
 
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule, {
+    logger: console
+  })
 
   app.setGlobalPrefix('client/api')
-  app.use(logger.info)
   app.use('/client/api/docs', swaggerUI.serve, swaggerUI.setup(docs))
 
   await app.listen(process.env.PORT || 3000)

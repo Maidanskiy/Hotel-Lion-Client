@@ -1,29 +1,38 @@
+import { Injectable } from '@nestjs/common'
 import * as winston from 'winston'
 import * as expressWinston from 'express-winston'
+import { EnvService } from './env/env.service'
 
-export default {
+@Injectable()
+export class AppLogger {
 
-  info: expressWinston.logger({
-    transports: [
-      new winston.transports.Console({
-        json: true,
-        colorize: true,
-        stringify: process.env.NODE_ENV === 'production'
-      })
-    ],
-    bodyBlacklist: ['password', 'login'],
-    msg: 'HTTP {{req.method}} {{req.url}}',
-    expressFormat: true
-  }),
+  constructor(private readonly _EnvService: EnvService) {}
 
-  error: expressWinston.errorLogger({
-    transports: [
-      new winston.transports.Console({
-        json: true,
-        colorize: true,
-        stringify: process.env.NODE_ENV === 'production'
-      })
-    ]
-  })
+  public log() {
+    return expressWinston.logger({
+      transports: [
+        new winston.transports.Console({
+          json: true,
+          colorize: true,
+          stringify: this._EnvService.isProduction()
+        })
+      ],
+      bodyBlacklist: ['password', 'login'],
+      msg: 'HTTP {{req.method}} {{req.url}}',
+      expressFormat: true
+    })
+  }
+
+  public error() {
+    return expressWinston.errorLogger({
+      transports: [
+        new winston.transports.Console({
+          json: true,
+          colorize: true,
+          stringify: this._EnvService.isProduction()
+        })
+      ]
+    })
+  }
 
 }
