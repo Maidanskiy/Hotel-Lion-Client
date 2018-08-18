@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common'
 
+/**
+ * Environment Service
+ * Provides functionality for getting
+ * and validating environment variables
+ */
 @Injectable()
 export class EnvService {
 

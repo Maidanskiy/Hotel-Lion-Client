@@ -2,6 +2,10 @@ import { Injectable } from '@nestjs/common'
 import { EnvService } from '../env/env.service'
 import * as nodemailer from 'nodemailer'
 
+/**
+ * Email Service
+ * Provides functionality for sending emails
+ */
 @Injectable()
 export class EmailService {
 

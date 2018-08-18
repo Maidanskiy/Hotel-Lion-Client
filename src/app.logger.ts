@@ -3,6 +3,9 @@ import * as winston from 'winston'
 import * as expressWinston from 'express-winston'
 import { EnvService } from './env/env.service'
 
+/**
+ * Application Logger
+ */
 @Injectable()
 export class AppLogger {
 

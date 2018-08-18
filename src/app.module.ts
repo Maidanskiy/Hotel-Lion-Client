@@ -1,12 +1,15 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common'
 import { EnvModule } from './env/env.module'
-import { UserModule } from './user/user.module'
 import { AppLogger } from './app.logger'
 import { EmailModule } from './email/email.module'
+import { ProfileModule } from './profile/profile.module'
 
+/**
+ * Main Application Module
+ */
 @Module({
   providers: [AppLogger],
-  imports: [EnvModule, UserModule, EmailModule]
+  imports: [EnvModule, EmailModule, ProfileModule]
 })
 export class AppModule {
 

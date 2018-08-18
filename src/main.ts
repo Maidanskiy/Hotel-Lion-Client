@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core'
+import { ValidationPipe } from '@nestjs/common'
 import { AppModule } from './app.module'
 import * as swaggerUI from 'swagger-ui-express'
 import * as YAML from 'yamljs'
@@ -13,6 +14,9 @@ const docs = YAML.load(__dirname + '/../docs.yaml');
 
   // use global prefix
   app.setGlobalPrefix('client/api')
+
+  // validate all request (where it is possible)
+  app.useGlobalPipes(new ValidationPipe({ transform: true }))
 
   // adds CORS
   app.enableCors({
